@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Paper Summary - Quantum computing in power systems.md",
+                "file": "Paper Summary -  Qubit-Efficient Quantum Annealing for Stochastic Unit Commitment, 2026.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Paper Summary - Quantum computing in power systems"
+              "title": "Paper Summary -  Qubit-Efficient Quantum Annealing for Stochastic Unit Commitment, 2026"
             }
           }
         ]
@@ -188,11 +188,14 @@
       "bases:Create new base": false
     }
   },
-  "active": "a370d4f00ced8c4e",
+  "active": "ba72506f1faa2d3c",
   "lastOpenFiles": [
+    "Paper Summary - Quantum computing in power systems (2022).md",
+    "Paper Summary -  Qubit-Efficient Quantum Annealing for Stochastic Unit Commitment, 2026.md",
+    "Paper Summary - Quantum Annealing vs. QAOA 127 Qubit Higher-Order Ising Problems on NISQ Computers (2023).md",
+    "Paper Summary - Performance Comparison of Gate-Based and Adiabatic Quantum Computing for AC Power Flow Problem (2026).md",
     "Quadratic Unconstrained Binary Optimization.md",
     "Quantum Approximation Optimization Algorithm.md",
-    "Paper Summary - Quantum computing in power systems.md",
     "Variational Quantum Circuits & Algorithms.md",
     "Quantum Neural Networks.md",
     "Stuff to Research.md",
