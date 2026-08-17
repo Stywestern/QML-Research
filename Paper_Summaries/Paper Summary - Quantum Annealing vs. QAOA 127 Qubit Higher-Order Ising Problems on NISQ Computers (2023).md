@@ -25,15 +25,15 @@ QAOA as Trotterized Quantum Annealing
 	* **The NISQ Scaling Unknown:** It is currently unknown which approach will scale better to massive problems. We are in the **Noisy Intermediate-Scale Quantum (NISQ)** era, meaning both face severe physical limits: QAOA is bottlenecked by digital gate noise as circuit depth increases, while QA is bottlenecked by analog thermal noise and embedding overhead.
 
 Hardware Topology (Heavy-Hex vs. Pegasus) 
-* [cite_start]**Core Definition:** **Hardware Topology (or Lattice)** refers to the physical "wiring" of a quantum chip[cite: 2744]. [cite_start]Physical qubits are fixed on a chip and can only interact with their direct, physical neighbors[cite: 2747, 2748]. 
+* **Core Definition:** **Hardware Topology (or Lattice)** refers to the physical "wiring" of a quantum chip. Physical qubits are fixed on a chip and can only interact with their direct, physical neighbors. 
 1. Logical Heavy-Hexagonal Lattice (IBM / Gate-Based) 
-	* [cite_start]**Layout:** IBM arranges qubits in a honeycomb pattern with extra qubits on the edges ("Heavy-Hex")[cite: 2749, 2750, 2751]. 
-	* [cite_start]**The Penalty:** Interacting non-adjacent qubits requires **SWAP gates**, which add severe noise and circuit depth[cite: 2765, 2766]. 
+	* **Layout:** IBM arranges qubits in a honeycomb pattern with extra qubits on the edges ("Heavy-Hex"). 
+	* **The Penalty:** Interacting non-adjacent qubits requires **SWAP gates**, which add severe noise and circuit depth. 
 2. Graph Topology of Pegasus (D-Wave / Annealing) 
-	* [cite_start]**Layout:** "Pegasus" is D-Wave's interwoven wiring layout where each qubit connects to exactly 15 others[cite: 2768, 2769]. 
-	* [cite_start]**The Penalty:** If a problem requires more than 15 connections, the system must use **Minor Embedding** (chaining multiple physical qubits to act as one), wasting space and risking chain breaks[cite: 2770, 2771]. 
+	* **Layout:** "Pegasus" is D-Wave's interwoven wiring layout where each qubit connects to exactly 15 others. 
+	* **The Penalty:** If a problem requires more than 15 connections, the system must use **Minor Embedding** (chaining multiple physical qubits to act as one), wasting space and risking chain breaks. 
 3. The "Fair" Benchmark 
-	* [cite_start]**The Goal:** To test the algorithms purely, researchers design test problems that naturally fit **both** IBM's Heavy-Hex and D-Wave's Pegasus wiring[cite: 2772, 2773]. [cite_start]This avoids SWAP-gate noise on IBM and Minor Embedding overhead on D-Wave[cite: 2774].
+	* **The Goal:** To test the algorithms purely, researchers design test problems that naturally fit **both** IBM's Heavy-Hex and D-Wave's Pegasus wiring. This avoids SWAP-gate noise on IBM and Minor Embedding overhead on D-Wave.
 
 The 4 Components of the QAOA Algorithm 
 * **The Setup:** QAOA solves combinatorial problems by finding a binary string (or "spins", +1/-1) that minimizes an objective/cost function (just like a classical Loss Function). To execute the algorithm, you must define four specific quantum components: 

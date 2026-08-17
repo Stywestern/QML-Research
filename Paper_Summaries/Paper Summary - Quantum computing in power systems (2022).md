@@ -12,20 +12,21 @@ At every bus $i$, there are 4 main variables:
 3. Active Real Power ($P_i$ — measured in Watts)
 4. Reactive Power ($Q_i$ — measured in VARs, which maintains magnetic fields in motors/transformers)
 **The Power Flow Problem:** Given specified power generation and load consumption at each bus, **find the unknown voltages ($V_i$) and phase angles ($\delta_i$) across the whole network.**
-Non-linear active power: $P_i = \sum V_i V_j (G_{ij}\cos\delta_{ij} + B_{ij}\sin\delta_{ij})$ * Solved iteratively via [[Newton-Raphson Algorithm]]: $$\begin{bmatrix} \Delta P \\ \Delta Q \end{bmatrix} = \mathbf{J} \begin{bmatrix} \Delta \delta \\ \Delta V \end{bmatrix}$$
+Non-linear active power: $P_i = \sum V_i V_j (G_{ij}\cos\delta_{ij} + B_{ij}\sin\delta_{ij})$ * Solved iteratively via Newton-Raphson Algorithm: $$\begin{bmatrix} \Delta P \\ \Delta Q \end{bmatrix} = \mathbf{J} \begin{bmatrix} \Delta \delta \\ \Delta V \end{bmatrix}$$
 * **Bottleneck:** Classical linear solver for Jacobian $\mathbf{J}$ scales as $\mathcal{O}(N^3)$.
-Quantum Solution: Hybrid VQLS Pipeline * Use [[Variational Quantum Linear Solver (VQLS)]] inside Newton-Raphson loop.
+Quantum Solution: Hybrid VQLS Pipeline 
+* Use Variational Quantum Linear Solver (VQLS) inside Newton-Raphson loop.
 * Encodes state vector $|\beta\rangle \propto [\Delta P, \Delta Q]^T$. * Optimizes VQC parameters $\theta$ to minimize residual: $$\mathcal{C}(\theta) \to 0 \implies |\psi(\theta)\rangle \approx \mathbf{J}^{-1}|\beta\rangle$$
 State Estimation (SE): 
 * Solve for **Bus States** $\mathbf{x} = [\boldsymbol{\delta}, \mathbf{V}]^T$.
 * **Power Flow:** Deterministic solution to $f(\mathbf{x}) = 0$. 
 * **State Estimation:** Filters noisy SCADA/PMU sensor data $\mathbf{z} = h(\mathbf{x}) + \mathbf{e}$ via Weighted Least Squares (WLS): $$\min_{\mathbf{x}} [\mathbf{z} - h(\mathbf{x})]^T \mathbf{R}^{-1} [\mathbf{z} - h(\mathbf{x})]$$
-* **QML Role:** Accelerated via [[VQLS]] (matrix inversion of Gain Matrix $\mathbf{G}$) or replaced by direct data-driven [[Quantum Neural Networks]].
+* **QML Role:** Accelerated via VQLS (matrix inversion of Gain Matrix $\mathbf{G}$) or replaced by direct data-driven Quantum Neural Networks.
 
 Grid Sensors: SCADA vs. PMU 
-* **SCADA:** Legacy sensors. Slow (1 sample / 2–4s), asynchronous, measures magnitudes ($V, I$) only. Requires heavy [[State Estimation]] math to estimate $\delta$. 
+* **SCADA:** Legacy sensors. Slow (1 sample / 2–4s), asynchronous, measures magnitudes ($V, I$) only. Requires heavy State Estimation math to estimate $\delta$. 
 * **PMU (Phasor Measurement Unit):** Modern sensors. Ultra-fast (30–120 Hz), GPS-synchronized, directly measures **Phase Angles ($\delta$)**. 
-* **QML Context:** [[QNNs]] ingest streaming PMU/SCADA time-series data vectors $|\mathbf{z}\rangle$ for real-time fault detection and transient analysis.
+* **QML Context:** QNNs ingest streaming PMU/SCADA time-series data vectors $|\mathbf{z}\rangle$ for real-time fault detection and transient analysis.
 
 SCADA systems are easily managed by classical computers, so the research is on mostly PMU datasets -sometimes SCADA+PMU hybrids- as they generate more data to work with.
 
@@ -36,7 +37,7 @@ Dynamic EMTP & QEMTP Algorithms
 	* **Bottleneck:** Solving $\mathbf{G}_{eq} \mathbf{v} = \mathbf{b}$ up to $100,000\times$ per second of simulation; scales polynomially $\mathcal{O}(N^3)$. 
 	
 2. QEMTP & QSFA Solutions 
-	* **VQLS-QEMTP:** Replaces classical linear solver with a [[VQC]] variational loop per time step. 
+	* **VQLS-QEMTP:** Replaces classical linear solver with a VQC variational loop per time step. 
 	* **QSFA (Quantum Shifted Frequency Analysis):** Shifts high-frequency carrier wave to envelope frequency, allowing larger time steps $\Delta t$. 
 	* **Trade-Off / Bottleneck:** Quantum solvers yield *approximate* solutions $|v\rangle$; historical state updates cause error accumulation over time without error correction.
 
@@ -52,33 +53,33 @@ VQLS vs. QPE for Transient Solvers (QEMTP)
 	 * **HHL / QPE:** Uses Quantum Phase Estimation to calculate matrix eigenvalues $\lambda_j$ directly. 
 	 * **Bottleneck:** Requires high circuit depth, QFTs, and fault-tolerant error correction; fails due to rapid gate decoherence on current hardware
 2. The VQLS Advantage 
-	 * **Hybrid Approach:** Replaces deep QPE circuits with shallow [[Variational Quantum Circuits (VQCs)]]. *
+	 * **Hybrid Approach:** Replaces deep QPE circuits with shallow Variational Quantum Circuits (VQCs). 
 	 * Decomposes system matrix $\mathbf{A} = \sum c_l A_l$ into Pauli strings. 
 	 * Uses shallow **Hadamard Tests** to compute cost function $\mathcal{C}_G(\theta)$ on QPU, while classical CPU updates $\theta$. 
 	 * ***Trade-off:** NISQ-friendly shallow depth vs. *approximate* solution requiring error mitigation.
 
 Stochastic Risk Assessment (QAE vs. MCS)
 1. Classical Monte Carlo Simulation (MCS) Bottleneck 
-	* Used for [[Probabilistic Power Flow]] & risk assessment under renewable uncertainty. 
+	* Used for Probabilistic Power Flow & risk assessment under renewable uncertainty. 
 	* ***Error Scaling:** $\epsilon = \mathcal{O}(1/\sqrt{N}) \implies N = \mathcal{O}(1/\epsilon^2)$. 
 	* Requires millions of sequential AC Power Flow runs for high precision
 2. Quantum Amplitude Estimation (QAE) 
-	* Leverages [[Grover's Search Algorithm]] operator $\mathcal{Q}$ to amplify probability amplitude $\sqrt{p}$. 
+	* Leverages Grover's Search Algorithm operator $\mathcal{Q}$ to amplify probability amplitude $\sqrt{p}$. 
 	* **Quantum Speedup:** Quadratic Speedup with error scaling $\epsilon = \mathcal{O}(1/N) \implies N = \mathcal{O}(1/\epsilon)$. 
 	* **Applications:** Value-at-Risk in energy trading, line overload probabilities, reserve scheduling.
 
 Grid Optimization & Control Hierarchy 
-* **Unit Commitment (UC):** Day-ahead plant ON/OFF scheduling. Mapped to [[QUBO]]/[[Ising Model]] for [[Quantum Annealing]] & [[QAOA]]. 
-* **Energy Management Systems (EMS):** Real-time power balancing solved via [[Q-ADMM]]. 
-* **Energy Trading:** Market bidding & Value-at-Risk under renewable uncertainty, accelerated via [[QAE]]. 
-* **Emergency Control:** Sub-second blackout defense (load shedding) driven by fast [[QNN]] classifiers on streaming [[PMU]] data.
+* **Unit Commitment (UC):** Day-ahead plant ON/OFF scheduling. Mapped to QUBO/Ising Model for Quantum Annealing & QAOA. 
+* **Energy Management Systems (EMS):** Real-time power balancing solved via Q-ADMM. 
+* **Energy Trading:** Market bidding & Value-at-Risk under renewable uncertainty, accelerated via QAE. 
+* **Emergency Control:** Sub-second blackout defense (load shedding) driven by fast QNN classifiers on streaming PMU data.
 
 NP-Hard Combinatorial Problems in Power Grids 
 1. Unit Commitment (UC): Deciding ON/OFF status of $N$ generators over $T$ hours ($2^{N \times T}$ states). 
 2. Distribution Network Reconfiguration: Choosing binary switch states to minimize line losses while keeping a radial tree topology. 
 3. Discrete Optimal Power Flow (D-OPF): Mixed-Integer Non-Linear Program (MINLP) for transformer tap positions and capacitor switching. 
 4. Emergency Load Shedding: Sub-second binary selection of feeder trips to halt blackout propagation. 
-* **Unified Formulation:** All mapped to QUBO / Ising Model ($H = \mathbf{x}^T \mathbf{Q} \mathbf{x}$) for acceleration on [[Quantum Annealers]] or via [[QAOA]].
+* **Unified Formulation:** All mapped to QUBO / Ising Model ($H = \mathbf{x}^T \mathbf{Q} \mathbf{x}$) for acceleration on Quantum Annealers or via QAOA.
 
 Universal Framework: QUBO & Ising Hamiltonians 
 1. Mathematical Equivalency 
@@ -97,7 +98,7 @@ Quantum ADMM (Q-ADMM) for Unit Commitment
 		2. Continuous Variables ($P_{i,t} \in \mathbb{R}$): Exact Megawatt outputs. 
 	* Quantum devices handle QUBO binary decisions well, but struggle with continuous constraints. 
 2. Q-ADMM Decomposition Pipeline 
-	1. **Binary Sub-Problem (QPU):** Formulates ON/OFF status as a [[QUBO]] solved via [[Quantum Annealing]] or [[QAOA]]. 
+	1. **Binary Sub-Problem (QPU):** Formulates ON/OFF status as a QUBO solved via Quantum Annealing or QAOA. 
 	2. **Continuous Sub-Problem (CPU):** Solves exact MW generation outputs using fast classical non-linear solvers. 
 	3. **Dual Update Loop (ADMM Coordinator):** Iteratively updates Lagrange multipliers ($\lambda$) until discrete and continuous states converge to an global optimal dispatch plan.
 
@@ -108,15 +109,15 @@ Transient Stability Assessment (TSA) & QML
 	* **Bottleneck:** Classical Time-Domain Simulation (TDS) is too slow ($>\text{seconds}$) for low-inertia grids collapsing in $<500\text{ms}$. 
 2. QML Solution Pipeline 
 	* **Approach:** Convert TDS into a real-time **Binary Classification Problem** ($0 = \text{Stable}, 1 = \text{Unstable}$). 
-	* Ingests high-speed [[PMU]] synchrophasors $[\mathbf{V}, \boldsymbol{\delta}]$ into a Quantum Feature Map. 
-	* Uses Parameterized [[VQCs]] / [[QNNs]] for sub-millisecond stability inference, enabling automated Emergency Control.
+	* Ingests high-speed PMU synchrophasors $[\mathbf{V}, \boldsymbol{\delta}]$ into a Quantum Feature Map. 
+	* Uses Parameterized VQCs / QNNs for sub-millisecond stability inference, enabling automated Emergency Control.
 
 
 Quantum Generative Adversarial Networks (QGANs)
 1. Purpose in Smart Grids 
-	* Generates realistic synthetic time-series data for volatile [[DERs]] (solar/wind) and rare fault scenarios for [[TSA]] training.
+	* Generates realistic synthetic time-series data for volatile DERs (solar/wind) and rare fault scenarios for TSA training.
 2. QGAN Architecture 
-	* Replaces classical Generator/Discriminator with [[Variational Quantum Circuits (VQCs)]]: $$\min_G \max_D V(D, G)$$
+	* Replaces classical Generator/Discriminator with Variational Quantum Circuits (VQCs): $$\min_G \max_D V(D, G)$$
 	* Leverages $2^n$-dimensional Hilbert space to model complex multi-bus correlations with high sample efficiency. 
 3. Current NISQ Bottlenecks 
 	* Limited to small input vectors due to qubit count constraints and Barren Plateaus. 
