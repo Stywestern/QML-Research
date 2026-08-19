@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Paper_Summaries/Paper Summary - 1.md",
+                "file": "Paper_Summaries/Paper Summary - Lower bounds on circuit depth of the quantum approximate optimization algorithm.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Paper Summary - 1"
+              "title": "Paper Summary - Lower bounds on circuit depth of the quantum approximate optimization algorithm"
             }
           }
         ]
@@ -190,8 +190,13 @@
   },
   "active": "243788357bbbdb59",
   "lastOpenFiles": [
+    "Paper_Summaries/Paper Summary - CUAOA, A Novel CUDA Accelerated Simulation Framework for the QAOA.md",
+    "Paper_Summaries/Paper Summary - Lower bounds on circuit depth of the quantum approximate optimization algorithm.md",
+    "Original_Papers/Lower bounds on circuit depth of the quantum approximate optimization algorithm.pdf",
+    "Paper_Summaries/Paper Summary - 3.md",
+    "Paper_Summaries/Paper Summary - 2.md",
     "Paper_Summaries/Paper Summary -.md",
-    "Paper_Summaries/Paper Summary - 1.md",
+    "Original_Papers/CUAOA_A_Novel_CUDA-Accelerated_Simulation_Framework_for_the_QAOA.pdf",
     "Paper_Summaries/Paper Summary - Quantum annealing for combinatorial optimization, a benchmarking study (2025).md",
     "Original_Papers/Quantum annealing for combinatorial optimization a benchmarking study.pdf",
     "Paper_Summaries/Paper Summary - Alleviating the quantum Big-M problem (2025).md",
@@ -210,7 +215,6 @@
     "Original_Papers/Challenges and opportunities in quantum optimization.pdf",
     "Paper_Summaries/Paper Summary - Quantum annealing for joint chance-constrained unit commitment (2026).md",
     "Paper_Summaries/Paper Summary - A Comprehensive Survey on Quantum Annealing Applications, Challenges, and Future Research Directions.md",
-    "Original_Papers/quantum_annealing.pdf",
     "Quantum Computing Simulation on CPU.md",
     "Concepts/Quantum Neural Networks.md",
     "Concepts/Quantum Computing Simulation on CPU.md",
@@ -218,15 +222,10 @@
     "Concepts/Quadratic Unconstrained Binary Optimization (QUBO).md",
     "Concepts/Newton-Raphson Algorithm.md",
     "Concepts/Variational Quantum Circuits & Algorithms.md",
-    "Concepts",
     "Paper_Summaries/Paper Summary - Quantum computing in power systems (2022).md",
     "Paper_Summaries/Paper Summary - Performance Comparison of Gate-Based and Adiabatic Quantum Computing for AC Power Flow Problem (2026).md",
     "Paper Summary - A Comprehensive Survey on Quantum Annealing Applications, Challenges, and Future Research Directions.md",
     "Paper Summary -  Qubit-Efficient Quantum Annealing for Stochastic Unit Commitment, 2026.md",
-    "Paper Summary - Quantum Annealing vs. QAOA 127 Qubit Higher-Order Ising Problems on NISQ Computers (2023).md",
-    "Paper Summary - Performance Comparison of Gate-Based and Adiabatic Quantum Computing for AC Power Flow Problem (2026).md",
-    "Paper Summary - Quantum computing in power systems (2022).md",
-    "Quantum Neural Networks.md",
-    "Variational Quantum Circuits & Algorithms.md"
+    "Paper Summary - Quantum Annealing vs. QAOA 127 Qubit Higher-Order Ising Problems on NISQ Computers (2023).md"
   ]
 }
